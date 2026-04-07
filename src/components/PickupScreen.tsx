@@ -166,3 +166,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   btnText: { color: colors.onPrimary, fontSize: 17, fontWeight: '700' },
+});
+
+export default PickupScreen;
