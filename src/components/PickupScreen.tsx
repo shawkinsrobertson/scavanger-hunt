@@ -21,10 +21,29 @@ interface Props {
 export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed }: Props) {
   const [confirmed, setConfirmed] = useState(false);
   const emojiScale = useRef(new Animated.Value(0)).current;
+  const buttonTranslateX = useRef(new Animated.Value(0)).current;
+  const buttonTranslateY = useRef(new Animated.Value(0)).current;
 
   const progressPercent = ((stopNumber - 1) / totalStops) * 100;
 
-  function handleConfirm() {
+  function handleButtonPress() {
+    Animated.parallel([
+      Animated.timing(buttonTranslateX, {
+        toValue: -6,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(buttonTranslateY, {
+        toValue: 6,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      Animated.parallel([
+        Animated.timing(buttonTranslateX, { toValue: 0, duration: 100, useNativeDriver: true }),
+        Animated.timing(buttonTranslateY, { toValue: 0, duration: 100, useNativeDriver: true }),
+      ]).start();
+    });
     setConfirmed(true);
     Animated.spring(emojiScale, {
       toValue: 1,
@@ -37,6 +56,8 @@ export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed }: Prop
   useEffect(() => {
     // reset when reused
     emojiScale.setValue(0);
+    buttonTranslateX.setValue(0);
+    buttonTranslateY.setValue(0);
     setConfirmed(false);
   }, [stop.id]);
 
@@ -60,8 +81,16 @@ export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed }: Prop
               <View style={styles.arrivalBox}>
                 <Text style={styles.arrivalText}>{stop.arrivalMessage}</Text>
               </View>
-              <TouchableOpacity style={styles.btn} onPress={handleConfirm} activeOpacity={0.85}>
-                <Text style={styles.btnText}>✅ {stop.confirmLabel}</Text>
+              <TouchableOpacity onPress={handleButtonPress} activeOpacity={1}>
+                <Animated.Image
+                  source={require('../assets/btn-primary-active.png')}
+                  style={[
+                    styles.buttonImage,
+                    {
+                      transform: [{ translateX: buttonTranslateX }, { translateY: buttonTranslateY }],
+                    },
+                  ]}
+                />
               </TouchableOpacity>
             </>
           ) : (
@@ -158,15 +187,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   arrivalText: { fontSize: 16, color: colors.text, lineHeight: 24 },
-  btn: {
-    backgroundColor: colors.primary,
-    borderRadius: 16,
-    paddingVertical: 16,
+  buttonImage: {
     width: '100%',
-    alignItems: 'center',
-    marginTop: 4,
+    height: 60,
+    resizeMode: 'contain',
   },
-  btnText: { color: colors.onPrimary, fontSize: 17, fontWeight: '700' },
 });
 
 export default PickupScreen;

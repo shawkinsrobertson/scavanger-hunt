@@ -1,4 +1,5 @@
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
+import { useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useGeolocation, distanceBetween } from '../hooks/useGeolocation';
 import type { HuntStop } from '../data/hunt';
@@ -53,6 +54,29 @@ const proximityStyles = StyleSheet.create({
 export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
   const geo = useGeolocation();
   const radius = stop.arrivalRadius ?? 30;
+  const translateX = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  function handleButtonPress() {
+    Animated.parallel([
+      Animated.timing(translateX, {
+        toValue: -6,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateY, {
+        toValue: 6,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      Animated.parallel([
+        Animated.timing(translateX, { toValue: 0, duration: 100, useNativeDriver: true }),
+        Animated.timing(translateY, { toValue: 0, duration: 100, useNativeDriver: true }),
+      ]).start();
+    });
+    onArrived();
+  }
 
   const distance =
     geo.lat !== null && geo.lng !== null
@@ -113,8 +137,16 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
           )}
 
           {hasArrived && (
-            <TouchableOpacity style={styles.arrivedBtn} onPress={onArrived} activeOpacity={0.85}>
-              <Text style={styles.btnText}>I'm Here! 📍</Text>
+            <TouchableOpacity onPress={handleButtonPress} activeOpacity={1}>
+              <Animated.Image
+                source={require('../assets/btn-primary-active.png')}
+                style={[
+                  styles.buttonImage,
+                  {
+                    transform: [{ translateX }, { translateY }],
+                  },
+                ]}
+              />
             </TouchableOpacity>
           )}
 
@@ -185,14 +217,9 @@ const styles = StyleSheet.create({
   },
   clueText: { fontSize: 16, color: colors.text, lineHeight: 24 },
   distanceBadge: { fontSize: 14, fontWeight: '600', color: colors.textMuted },
-  arrivedBtn: {
-    backgroundColor: colors.primary,
-    borderRadius: 16,
-    paddingVertical: 16,
+  buttonImage: {
     width: '100%',
-    alignItems: 'center',
-    marginTop: 4,
+    height: 60,
+    resizeMode: 'contain',
   },
-  btnText: { color: colors.onPrimary, fontSize: 17, fontWeight: '700' },
-  accuracy: { fontSize: 12, color: colors.outline },
 });

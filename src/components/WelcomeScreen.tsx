@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -5,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Image,
+  Animated,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import type { Hunt } from '../data/hunt';
@@ -16,6 +18,30 @@ interface Props {
 }
 
 export function WelcomeScreen({ hunt, onStart }: Props) {
+  const translateX = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  function handleButtonPress() {
+    Animated.parallel([
+      Animated.timing(translateX, {
+        toValue: -6,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateY, {
+        toValue: 6,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      Animated.parallel([
+        Animated.timing(translateX, { toValue: 0, duration: 100, useNativeDriver: true }),
+        Animated.timing(translateY, { toValue: 0, duration: 100, useNativeDriver: true }),
+      ]).start();
+    });
+    onStart();
+  }
+
   return (
     <View style={styles.screen}>
       <StatusBar style="light" />
@@ -33,8 +59,16 @@ export function WelcomeScreen({ hunt, onStart }: Props) {
           <View style={styles.badge}>
             <Text style={styles.badgeText}>{hunt.stops.length} stops to find</Text>
           </View>
-          <TouchableOpacity style={styles.btn} onPress={onStart} activeOpacity={0.85}>
-            <Text style={styles.btnText}>LET'S GO!</Text>
+          <TouchableOpacity onPress={handleButtonPress} activeOpacity={1}>
+            <Animated.Image
+              source={require('../assets/btn-primary-active.png')}
+              style={[
+                styles.buttonImage,
+                {
+                  transform: [{ translateX }, { translateY }],
+                },
+              ]}
+            />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -55,7 +89,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.surface,
-    borderRadius: 28,
+    borderRadius: 4,
     padding: 32,
     width: '100%',
     maxWidth: 440,
@@ -101,19 +135,9 @@ const styles = StyleSheet.create({
     color: colors.onPrimaryContainer,
     fontWeight: '600',
   },
-  btn: {
-    backgroundColor: colors.primary,
-    borderRadius: 16,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+  buttonImage: {
     width: '100%',
-    alignItems: 'center',
-    marginTop: 4,
-  },
-  btnText: {
-    color: colors.onPrimary,
-    fontSize: 17,
-    fontWeight: '700',
-    letterSpacing: 0.3,
+    height: 60,
+    resizeMode: 'contain',
   },
 });
