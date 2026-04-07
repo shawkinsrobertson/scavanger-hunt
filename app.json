@@ -7,8 +7,9 @@
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
+      "image": "./src/assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#7c3aed"
+      "backgroundColor": "#4658a9"
     },
     "ios": {
       "supportsTablet": false,
@@ -19,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#7c3aed"
+        "backgroundColor": "#4658a9"
       },
       "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
     },
