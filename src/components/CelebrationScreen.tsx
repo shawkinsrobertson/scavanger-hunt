@@ -6,6 +6,7 @@ import {
   Animated,
   Dimensions,
   ScrollView,
+  Image,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { colors } from '../styles/colors';
@@ -118,9 +119,10 @@ export function CelebrationScreen({ message, totalStops }: Props) {
         showsVerticalScrollIndicator={false}
       >
         <Animated.View style={[styles.card, { transform: [{ scale }] }]}> 
-          <Animated.Text style={[styles.cakeEmoji, { transform: [{ scale: cakeScale }] }]}>
-            🎂
-          </Animated.Text>
+          <Animated.Image
+            source={require('../assets/cake.png')}
+            style={[styles.cakeImage, { transform: [{ scale: cakeScale }] }]}
+          />
           <Text style={styles.title}>You Did It!</Text>
           <Text style={styles.message}>{message}</Text>
           <View style={styles.summaryBadge}>
@@ -128,7 +130,10 @@ export function CelebrationScreen({ message, totalStops }: Props) {
               🎁 {totalStops} stop{totalStops !== 1 ? 's' : ''} completed
             </Text>
           </View>
-          <Animated.Text style={[styles.balloons, { transform: [{ translateY: balloonY }] }]}>🎈🎈🎈</Animated.Text>
+          <Animated.Image
+            source={require('../assets/balloon.png')}
+            style={[styles.balloonImage, { transform: [{ translateY: balloonY }] }]}
+          />
         </Animated.View>
       </ScrollView>
     </View>
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.surface,
-    borderRadius: 24,
+    borderRadius: 4,
     padding: 32,
     width: '100%',
     maxWidth: 440,
@@ -158,7 +163,11 @@ const styles = StyleSheet.create({
     elevation: 8,
     zIndex: 1,
   },
-  cakeEmoji: { fontSize: 64 },
+  cakeImage: {
+    width: 92,
+    height: 92,
+    marginBottom: 6,
+  },
   title: {
     fontSize: 32,
     fontWeight: '800',
@@ -166,6 +175,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   message: {
+    fontFamily: "RobotoMono-Regular",
     fontSize: 16,
     color: colors.textMuted,
     lineHeight: 26,
@@ -173,19 +183,18 @@ const styles = StyleSheet.create({
   },
   summaryBadge: {
     backgroundColor: colors.surfaceVariant,
-    borderRadius: 20,
+    borderRadius: 4,
     paddingHorizontal: 18,
     paddingVertical: 8,
   },
   summaryText: { 
+    fontFamily: "PixelifySans-SemiBold",
     fontSize: 14, 
-    fontWeight: '600', 
     color: colors.textMuted 
   },
-  
-  balloons: {
-    fontSize: 40,
+  balloonImage: {
+    width: 120,
+    height: 80,
     marginTop: 18,
-    textAlign: 'center',
   },
 });

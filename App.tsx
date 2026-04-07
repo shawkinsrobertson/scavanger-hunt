@@ -16,14 +16,14 @@ export default function App() {
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
+        'PixelifySans-Regular': require('./src/assets/Fonts/PixelifySans-Regular.ttf'),
         'PixelifySans-Bold': require('./src/assets/Fonts/PixelifySans-Bold.ttf'),
-        'PixelifySans-Italic': require('./src/assets/Fonts/PixelifySans-Italic.ttf'),
         'PixelifySans-Medium': require('./src/assets/Fonts/PixelifySans-Medium.ttf'),
         'PixelifySans-SemiBold': require('./src/assets/Fonts/PixelifySans-SemiBold.ttf'),
-        'RobotoMono-Light': require('./src/assets/Fonts/RobotoMono-Light.ttf'),
-        'RobotoMono-Bold': require('./src/assets/Fonts/RobotoMono-Bold.ttf'),
         'RobotoMono-Regular': require('./src/assets/Fonts/RobotoMono-Regular.ttf'),
+        'RobotoMono-Light': require('./src/assets/Fonts/RobotoMono-Light.ttf'),
         'RobotoMono-Medium': require('./src/assets/Fonts/RobotoMono-Medium.ttf'),
+        'RobotoMono-Bold': require('./src/assets/Fonts/RobotoMono-Bold.ttf'),
       });
       setFontsLoaded(true);
     }

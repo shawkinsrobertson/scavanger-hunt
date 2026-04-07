@@ -32,9 +32,9 @@ export interface Hunt {
 // ─── Edit this to configure your hunt ──────────────────────────────────────
 
 export const hunt: Hunt = {
-  title: "Happy Birthday Scavenger Hunt! 🎂",
+  title: "Welcome, Julie",
   welcomeMessage:
-    "Welcome to your very own birthday scavenger hunt! 🎉\n\nYou'll visit a few special spots to collect your surprises. Follow the clues at each step — your phone's GPS will guide you.\n\nWhen you're ready, head out to find your first stop!",
+    "to your very own birthday scavenger hunt! 🎉\n\nYou'll visit a few special spots to collect your surprises. Follow the clues at each step — your phone's GPS will guide you.\n\nWhen you're ready, head out to find your first stop!",
   celebrationMessage:
     "🎉 Happy Birthday! 🎂\n\nYou found everything! Hope today is as wonderful as you are. Enjoy your treats — you've earned them! 🥳",
   stops: [

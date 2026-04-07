@@ -51,7 +51,7 @@ export function WelcomeScreen({ hunt, onStart }: Props) {
       >
         <View style={styles.card}>
           <Image
-            source={require('../assets/treasure-chest.png')}
+            source={require('../assets/cake.png')}
             style={styles.heroImage}
           />
           <Text style={styles.title}>{hunt.title}</Text>
@@ -112,9 +112,8 @@ const styles = StyleSheet.create({
     fontSize: 56,
   },
   title: {
-    fontFamily: "PixelifySans-Bold",
-    fontSize: 28,
-    fontWeight: '800',
+    fontFamily: "PixelifySans-Regular",
+    fontSize: 60,
     color: colors.text,
     textAlign: 'center',
   },
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: colors.primaryContainer,
-    borderRadius: 20,
+    borderRadius: 4,
     paddingHorizontal: 16,
     paddingVertical: 6,
   },

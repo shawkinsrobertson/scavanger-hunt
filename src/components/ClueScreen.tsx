@@ -106,7 +106,7 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
             <Text style={styles.stopBadgeText}>Stop {stopNumber} of {totalStops}</Text>
           </View>
 
-          <Image source={require('../assets/compass.png')} style={styles.heroImage} />
+          <Image source={require('../assets/magnifying-glass.png')} style={styles.heroImage} />
           <Text style={styles.heading}>Follow the Clue</Text>
 
           {geo.loading && (
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.surface,
-    borderRadius: 24,
+    borderRadius: 4,
     padding: 28,
     width: '100%',
     maxWidth: 440,
@@ -193,33 +193,40 @@ const styles = StyleSheet.create({
   },
   stopBadge: {
     backgroundColor: colors.primaryContainer,
-    borderRadius: 20,
+    borderRadius: 4,
     paddingHorizontal: 14,
     paddingVertical: 4,
   },
-  stopBadgeText: { fontSize: 13, fontWeight: '600', color: colors.primary },
+  stopBadgeText: { fontFamily: "RobotoMono-Regular", fontSize: 13, color: colors.primary },
   heroImage: { width: 84, height: 84, marginVertical: 4 },
-  heading: { fontSize: 22, fontWeight: '700', color: colors.text },
-  muted: { fontSize: 15, color: colors.textMuted },
+  heading: { fontFamily: "RobotoMono-Bold", fontSize: 22, color: colors.text },
+  muted: { fontFamily: "RobotoMono-Regular", fontSize: 15, color: colors.textMuted },
   errorBox: {
     backgroundColor: colors.errorContainer,
-    borderRadius: 12,
+    borderRadius: 4,
     padding: 14,
     width: '100%',
   },
-  errorText: { fontSize: 14, color: colors.error, marginBottom: 4 },
-  errorSmall: { fontSize: 12, color: colors.onErrorContainer },
+  errorText: { fontFamily: "RobotoMono-Regular", fontSize: 14, color: colors.error, marginBottom: 4 },
+  errorSmall: { fontFamily: "RobotoMono-Regular", fontSize: 12, color: colors.onErrorContainer },
   clueBox: {
     backgroundColor: colors.surfaceVariant,
-    borderRadius: 14,
+    borderRadius: 4,
     padding: 16,
     width: '100%',
   },
-  clueText: { fontSize: 16, color: colors.text, lineHeight: 24 },
-  distanceBadge: { fontSize: 14, fontWeight: '600', color: colors.textMuted },
+  clueText: { fontFamily: "RobotoMono-Regular", fontSize: 16, color: colors.text, lineHeight: 24 },
+  distanceBadge: { fontFamily: "PixelifySans-SemiBold", fontSize: 14, color: colors.textMuted },
   buttonImage: {
     width: '100%',
     height: 60,
     resizeMode: 'contain',
+  },
+
+  accuracy: {
+    fontFamily: "RobotoMono-Regular",
+    fontSize: 12,
+    color: colors.textMuted,
+    marginTop: 8, 
   },
 });
