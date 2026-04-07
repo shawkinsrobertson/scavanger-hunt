@@ -177,4 +177,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 8,
   },
-  summaryText: { fontSize: 14, fontWeight: '600', color: colors.textMuted },
+  summaryText: { 
+    fontSize: 14, 
+    fontWeight: '600', 
+    color: colors.textMuted 
+  },
+  
+  balloons: {
+    fontSize: 40,
+    marginTop: 18,
+    textAlign: 'center',
+  },
+});
