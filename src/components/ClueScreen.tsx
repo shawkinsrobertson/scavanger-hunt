@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated, Easing } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useGeolocation, distanceBetween } from '../hooks/useGeolocation';
 import type { HuntStop } from '../data/hunt';
@@ -16,6 +16,17 @@ function getClue(stop: HuntStop, distance: number): string {
   if (distance > 500) return stop.clues.far;
   if (distance > 100) return stop.clues.medium;
   return stop.clues.near;
+}
+
+function bearingBetween(lat1: number, lng1: number, lat2: number, lng2: number) {
+  const toRad = (deg: number) => (deg * Math.PI) / 180;
+  const toDeg = (rad: number) => (rad * 180) / Math.PI;
+  const dLng = toRad(lng2 - lng1);
+  const y = Math.sin(dLng) * Math.cos(toRad(lat2));
+  const x =
+    Math.cos(toRad(lat1)) * Math.sin(toRad(lat2)) -
+    Math.sin(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.cos(dLng);
+  return (toDeg(Math.atan2(y, x)) + 360) % 360;
 }
 
 function ProximityIndicator({ distance }: { distance: number }) {
@@ -56,6 +67,23 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
   const radius = stop.arrivalRadius ?? 30;
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
+  const rotation = useRef(new Animated.Value(0)).current;
+
+  const bearing =
+    geo.lat !== null && geo.lng !== null
+      ? bearingBetween(geo.lat, geo.lng, stop.location.lat, stop.location.lng)
+      : null;
+
+  useEffect(() => {
+    if (bearing === null) return;
+
+    Animated.timing(rotation, {
+      toValue: bearing,
+      duration: 400,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    }).start();
+  }, [bearing, rotation]);
 
   function handleButtonPress() {
     Animated.parallel([
@@ -106,7 +134,13 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
             <Text style={styles.stopBadgeText}>Stop {stopNumber} of {totalStops}</Text>
           </View>
 
-          <Image source={require('../assets/magnifying-glass.png')} style={styles.heroImage} />
+          <View style={styles.compassContainer}>
+            <Image source={require('../assets/compass-ring.png')} style={styles.compassRing} />
+            <Animated.Image
+              source={require('../assets/compass-arrow.png')}
+              style={[styles.compassArrow, { transform: [{ rotate: rotation.interpolate({ inputRange: [0, 360], outputRange: ['0deg', '360deg'] }) }] }]}
+            />
+          </View>
           <Text style={styles.heading}>Follow the Clue</Text>
 
           {geo.loading && (
@@ -220,6 +254,25 @@ const styles = StyleSheet.create({
   buttonImage: {
     width: '100%',
     height: 60,
+    resizeMode: 'contain',
+  },
+  compassContainer: {
+    width: 140,
+    height: 140,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 4,
+  },
+  compassRing: {
+    position: 'absolute',
+    width: 140,
+    height: 140,
+    resizeMode: 'contain',
+  },
+  compassArrow: {
+    position: 'absolute',
+    width: 84,
+    height: 84,
     resizeMode: 'contain',
   },
 
