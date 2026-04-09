@@ -8,10 +8,10 @@
     "userInterfaceStyle": "light",
     "splash": {
       "layout": "fullscreen",
-      "background": "#4658a9",
-      "image": "./src/assets/treasure-chest.png",
+      "background": "#dce1ff",
+      "image": "./src/assets/nsew-compass-ring.png",
       "resizeMode": "contain",
-      "backgroundColor": "#4658a9"
+      "backgroundColor": "#dce1ff"
     },
     "ios": {
       "supportsTablet": false,
