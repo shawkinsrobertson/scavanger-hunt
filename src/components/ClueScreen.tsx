@@ -196,7 +196,7 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived, devMode }:
           )}
 
           {hasArrived && (
-            <TouchableOpacity onPress={handleButtonPress} activeOpacity={1}>
+            <TouchableOpacity onPress={handleButtonPress} activeOpacity={1} style={styles.buttonContainer}>
               <Animated.Image
                 source={require('../assets/start-hunt-primary.png')}
                 style={[
@@ -276,9 +276,14 @@ const styles = StyleSheet.create({
   },
   clueText: { fontFamily: "RobotoMono-Regular", fontSize: 16, color: colors.text, lineHeight: 24 },
   distanceBadge: { fontFamily: "PixelifySans-SemiBold", fontSize: 40, color: colors.textMuted, marginTop: 16 },
-  buttonImage: {
+  buttonContainer: {
     width: '100%',
     height: 60,
+    marginTop: 4,
+  },
+  buttonImage: {
+    width: '100%',
+    height: '100%',
     resizeMode: 'contain',
   },
   compassContainer: {
