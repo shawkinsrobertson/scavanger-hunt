@@ -8,6 +8,8 @@ import * as Font from 'expo-font';
 
 type Phase = 'welcome' | 'clue' | 'pickup' | 'celebration';
 
+const DEV_MODE = __DEV__;
+
 export default function App() {
   const [phase, setPhase] = useState<Phase>('welcome');
   const [currentStopIndex, setCurrentStopIndex] = useState(0);
@@ -59,6 +61,7 @@ export default function App() {
         stopNumber={currentStopIndex + 1}
         totalStops={hunt.stops.length}
         onArrived={handleArrived}
+        devMode={DEV_MODE}
       />
     );
   }
@@ -69,6 +72,7 @@ export default function App() {
         stopNumber={currentStopIndex + 1}
         totalStops={hunt.stops.length}
         onConfirmed={handleConfirmed}
+        devMode={DEV_MODE}
       />
     );
   }

@@ -16,9 +16,10 @@ interface Props {
   stopNumber: number;
   totalStops: number;
   onConfirmed: () => void;
+  devMode?: boolean;
 }
 
-export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed }: Props) {
+export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed, devMode }: Props) {
   const [confirmed, setConfirmed] = useState(false);
   const emojiScale = useRef(new Animated.Value(0)).current;
   const buttonTranslateX = useRef(new Animated.Value(0)).current;
@@ -50,7 +51,7 @@ export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed }: Prop
       useNativeDriver: true,
       friction: 5,
     }).start();
-    setTimeout(onConfirmed, 2200);
+    setTimeout(onConfirmed, devMode ? 0 : 2200);
   }
 
   useEffect(() => {
