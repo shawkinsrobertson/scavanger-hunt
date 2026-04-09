@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated, Easing } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useGeolocation, distanceBetween } from '../hooks/useGeolocation';
+import { useHeading } from '../hooks/useHeading';
 import type { HuntStop } from '../data/hunt';
 import { colors } from '../styles/colors';
 
@@ -64,42 +65,51 @@ const proximityStyles = StyleSheet.create({
 
 export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
   const geo = useGeolocation();
+  const heading = useHeading();
   const arrivalThreshold = 6;
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
   const rotation = useRef(new Animated.Value(0)).current;
   const accumulatedRotation = useRef(0);
-  const prevBearing = useRef<number | null>(null);
+  const prevAngle = useRef<number | null>(null);
 
   const bearing =
     geo.lat !== null && geo.lng !== null
       ? bearingBetween(geo.lat, geo.lng, stop.location.lat, stop.location.lng)
       : null;
 
-  useEffect(() => {
-    if (bearing === null) return;
+  // Relative angle: where to point the arrow given current device orientation.
+  // If heading is unavailable fall back to absolute bearing (phone-facing-north assumption).
+  const relativeAngle =
+    bearing !== null && heading !== null
+      ? (bearing - heading + 360) % 360
+      : bearing;
 
-    if (prevBearing.current === null) {
-      // First fix — jump straight to the bearing with no animation
-      accumulatedRotation.current = bearing;
-      rotation.setValue(bearing);
+  useEffect(() => {
+    if (relativeAngle === null) return;
+
+    if (prevAngle.current === null) {
+      // First fix — jump straight to angle with no animation
+      accumulatedRotation.current = relativeAngle;
+      rotation.setValue(relativeAngle);
     } else {
       // Subsequent updates — always take the shortest arc (handles 350°→10° correctly)
-      let delta = bearing - prevBearing.current;
+      let delta = relativeAngle - prevAngle.current;
       if (delta > 180) delta -= 360;
       if (delta < -180) delta += 360;
       accumulatedRotation.current += delta;
 
-      Animated.timing(rotation, {
+      // Spring handles rapid heading interruptions more gracefully than timing
+      Animated.spring(rotation, {
         toValue: accumulatedRotation.current,
-        duration: 400,
-        easing: Easing.out(Easing.cubic),
+        tension: 40,
+        friction: 8,
         useNativeDriver: true,
       }).start();
     }
 
-    prevBearing.current = bearing;
-  }, [bearing]);
+    prevAngle.current = relativeAngle;
+  }, [relativeAngle]);
 
   function handleButtonPress() {
     Animated.parallel([
@@ -151,7 +161,7 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
           </View>
 
           <View style={styles.compassContainer}>
-            <Image source={require('../assets/compass-ring.png')} style={styles.compassRing} />
+            <Image source={require('../assets/compass-ring-only.png')} style={styles.compassRing} />
             <Animated.Image
               source={require('../assets/compass-arrow.png')}
               style={[styles.compassArrow, { transform: [{ rotate: rotation.interpolate({ inputRange: [-3600, 3600], outputRange: ['-3600deg', '3600deg'] }) }] }]}

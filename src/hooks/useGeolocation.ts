@@ -40,7 +40,7 @@ export function useGeolocation(): GeoState {
         {
           accuracy: Location.Accuracy.High,
           distanceInterval: 0, // fire on time interval regardless of movement (Android requires BOTH)
-          timeInterval: 2000,
+          timeInterval: 1000,
         },
         (loc) => {
           if (cancelled) return;
