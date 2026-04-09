@@ -11,6 +11,7 @@ interface Props {
   stopNumber: number;
   totalStops: number;
   onArrived: () => void;
+  devMode?: boolean;
 }
 
 function getClue(stop: HuntStop, distance: number): string {
@@ -63,7 +64,7 @@ const proximityStyles = StyleSheet.create({
   label: { fontSize: 14, fontWeight: '700' },
 });
 
-export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
+export function ClueScreen({ stop, stopNumber, totalStops, onArrived, devMode }: Props) {
   const geo = useGeolocation();
   const heading = useHeading();
   const arrivalThreshold = 6;
@@ -137,7 +138,7 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived }: Props) {
       ? distanceBetween(geo.lat, geo.lng, stop.location.lat, stop.location.lng)
       : null;
 
-  const hasArrived = distance !== null && distance <= arrivalThreshold;
+  const hasArrived = devMode || (distance !== null && distance <= arrivalThreshold);
 
   const progressPercent = ((stopNumber - 1) / totalStops) * 100;
 
