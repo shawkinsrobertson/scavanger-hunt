@@ -169,8 +169,8 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   title: {
-    fontSize: 32,
-    fontWeight: '800',
+    fontFamily: "PixelifySans-Bold",
+    fontSize: 48,
     color: colors.primary,
     textAlign: 'center',
   },
@@ -189,12 +189,12 @@ const styles = StyleSheet.create({
   },
   summaryText: { 
     fontFamily: "PixelifySans-SemiBold",
-    fontSize: 14, 
+    fontSize: 20, 
     color: colors.textMuted 
   },
   balloonImage: {
     width: 120,
-    height: 80,
+    height: 120,
     marginTop: 18,
   },
 });

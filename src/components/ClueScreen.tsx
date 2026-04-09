@@ -198,7 +198,7 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived, devMode }:
           {hasArrived && (
             <TouchableOpacity onPress={handleButtonPress} activeOpacity={1} style={styles.buttonContainer}>
               <Animated.Image
-                source={require('../assets/start-hunt-primary.png')}
+                source={require('../assets/confirm-arrival-primary.png')}
                 style={[
                   styles.buttonImage,
                   {

@@ -82,9 +82,9 @@ export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed, devMod
               <View style={styles.arrivalBox}>
                 <Text style={styles.arrivalText}>{stop.arrivalMessage}</Text>
               </View>
-              <TouchableOpacity onPress={handleButtonPress} activeOpacity={1}>
+              <TouchableOpacity onPress={handleButtonPress} activeOpacity={1} style={styles.buttonContainer}>
                 <Animated.Image
-                  source={require('../assets/start-hunt-primary.png')}
+                  source={require('../assets/confirm-pickup-secondary.png')}
                   style={[
                     styles.buttonImage,
                     {
@@ -143,7 +143,7 @@ const dotStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.tertiaryContainer },
+  screen: { flex: 1, backgroundColor: colors.secondaryContainer },
   progressTrack: { height: 5, backgroundColor: 'rgba(0,0,0,0.12)' },
   progressBar: {
     height: 5,
@@ -188,9 +188,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   arrivalText: { fontFamily: "RobotoMono-Regular", fontSize: 16, color: colors.text, lineHeight: 24 },
-  buttonImage: {
+  buttonContainer: {
     width: '100%',
     height: 60,
+    marginTop: 4,
+  },
+  buttonImage: {
+    width: '100%',
+    height: '100%',
     resizeMode: 'contain',
   },
 });
