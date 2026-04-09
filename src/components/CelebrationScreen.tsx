@@ -195,7 +195,7 @@ function StatsPanel({ totalStops, distanceMeters, stepsWalked }: { totalStops: n
       {done && (
         <TouchableOpacity style={termStyles.shareBtn} onPress={handleShare} activeOpacity={0.7}>
           <Image source={require('../assets/share-icon.png')} style={termStyles.shareIcon} />
-          <Text style={termStyles.shareLabel}>SHARE REPORT</Text>
+          <Text style={termStyles.shareLabel}>SHARE</Text>
         </TouchableOpacity>
       )}
     </Animated.View>
@@ -206,8 +206,8 @@ const termStyles = StyleSheet.create({
   panel: {
     backgroundColor: colors.surfaceVariant,
     borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#1a3050',
+    borderWidth: 3,
+    borderColor: '#92a0ff',
     padding: 18,
     width: '100%',
     maxWidth: 440,
@@ -239,6 +239,7 @@ const termStyles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     marginTop: 14,
+    marginRight: 8,
     alignSelf: 'flex-end',
   },
   shareIcon: {
@@ -313,7 +314,7 @@ export function CelebrationScreen({ message, totalStops, distanceMeters, stepsWa
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.inversePrimary },
+  screen: { flex: 1, backgroundColor: colors.primary },
   scroll: {
     flexGrow: 1,
     alignItems: 'center',
