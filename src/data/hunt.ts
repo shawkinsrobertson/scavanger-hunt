@@ -53,7 +53,7 @@ export const hunt: Hunt = {
     },
     {
       id: "stop-2",
-      location: { lat: 37.7751, lng: -122.4183 }, // ← replace with real coords
+      location: { lat: 47.81022358987489, lng: -122.37540156130295 }, // ← crumpet shop for bkfst and tea
       clues: {
         far: "Next up: somewhere green and peaceful where you like to sit and read.",
         medium: "You're close to the park. Head toward the main bench area.",
@@ -66,7 +66,7 @@ export const hunt: Hunt = {
     },
     {
       id: "stop-3",
-      location: { lat: 47.81063329568221, lng: -122.37444287197067 }, // ← stillhouse coffee coords
+      location: { lat: 47.81309511190101, lng: -122.38424472655709 }, // ← edmonds to kingston ferry terminal
       clues: {
         far: "Last stop — think of the place that smells like fresh bread and good things.",
         medium: "Almost there! The bakery should be coming into view.",
