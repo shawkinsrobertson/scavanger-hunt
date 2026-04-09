@@ -170,37 +170,35 @@ export function ClueScreen({ stop, stopNumber, totalStops, onArrived, devMode }:
           </View>
           <Text style={styles.heading}>Follow the Clue</Text>
 
-          {geo.loading && (
+          {!devMode && geo.loading && (
             <Text style={styles.muted}>Finding your location…</Text>
           )}
 
-          {geo.error != null && (
+          {!devMode && geo.error != null && (
             <View style={styles.errorBox}>
               <Text style={styles.errorText}>📡 {geo.error}</Text>
               <Text style={styles.errorSmall}>Make sure location access is allowed.</Text>
             </View>
           )}
 
-          {!geo.loading && geo.error == null && distance !== null && (
+          {(devMode || (!geo.loading && geo.error == null && distance !== null)) && (
             <>
-              <ProximityIndicator distance={distance} />
+              {distance !== null && <ProximityIndicator distance={distance} />}
               <View style={styles.clueBox}>
-                <Text style={styles.clueText}>{getClue(stop, distance)}</Text>
+                <Text style={styles.clueText}>
+                  {distance !== null ? getClue(stop, distance) : stop.clues.far}
+                </Text>
               </View>
-              <Text style={styles.distanceBadge}>~{formatDistance(distance)} away</Text>
+              {distance !== null && (
+                <Text style={styles.distanceBadge}>~{formatDistance(distance)} away</Text>
+              )}
             </>
-          )}
-
-          {!geo.loading && geo.error == null && distance === null && (
-            <View style={styles.clueBox}>
-              <Text style={styles.clueText}>{stop.clues.far}</Text>
-            </View>
           )}
 
           {hasArrived && (
             <TouchableOpacity onPress={handleButtonPress} activeOpacity={1}>
               <Animated.Image
-                source={require('../assets/btn-primary-active.png')}
+                source={require('../assets/start-hunt-primary.png')}
                 style={[
                   styles.buttonImage,
                   {

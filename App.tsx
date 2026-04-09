@@ -8,7 +8,9 @@ import * as Font from 'expo-font';
 
 type Phase = 'welcome' | 'clue' | 'pickup' | 'celebration';
 
-const DEV_MODE = __DEV__;
+// Set to true to skip GPS and navigate freely for testing/styling.
+// Flip back to false before sharing the hunt with the real user.
+const DEV_MODE = true;
 
 export default function App() {
   const [phase, setPhase] = useState<Phase>('welcome');

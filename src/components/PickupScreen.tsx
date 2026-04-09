@@ -84,7 +84,7 @@ export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed, devMod
               </View>
               <TouchableOpacity onPress={handleButtonPress} activeOpacity={1}>
                 <Animated.Image
-                  source={require('../assets/btn-primary-active.png')}
+                  source={require('../assets/start-hunt-primary.png')}
                   style={[
                     styles.buttonImage,
                     {
