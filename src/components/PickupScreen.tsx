@@ -51,7 +51,7 @@ export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed, devMod
       useNativeDriver: true,
       friction: 5,
     }).start();
-    setTimeout(onConfirmed, devMode ? 0 : 2200);
+    setTimeout(onConfirmed, devMode ? 750 : 2200);
   }
 
   useEffect(() => {
