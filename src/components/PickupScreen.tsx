@@ -57,7 +57,7 @@ const STOP_ICONS = [
       useNativeDriver: true,
       friction: 5,
     }).start();
-    setTimeout(onConfirmed, devMode ? 750 : 2200);
+    setTimeout(onConfirmed, devMode ? 2200 : 2200);
   }
 
   useEffect(() => {
@@ -208,9 +208,9 @@ const styles = StyleSheet.create({
     height:180, 
    },
 
-  cconfirmedIcon: {
-  width: 96,
-  height: 96,
+  confirmedIcon: {
+  width: 120,
+  height: 120,
   resizeMode: 'contain',
 },
 
@@ -232,7 +232,8 @@ const styles = StyleSheet.create({
     fontFamily: "RobotoMono-Regular", 
     fontSize: 16, 
     color: colors.text, 
-    lineHeight: 24 
+    lineHeight: 24,
+    textAlign: 'center',
   },
   
   buttonContainer: {
