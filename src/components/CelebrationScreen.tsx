@@ -331,9 +331,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 16,
     width: '100%',
-    height: '100%',
+    marginTop: 16,
     marginBottom: 16,
-    gap: 12,
+    gap: 4,
   },
 
   cakeImage: {
