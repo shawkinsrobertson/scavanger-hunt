@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, StyleSheet, Dimensions, Easing } from 'react-native';
+import { Animated, StyleSheet, Dimensions } from 'react-native';
 import Svg, { Defs, Mask, Rect, Circle } from 'react-native-svg';
 
 const { width, height } = Dimensions.get('window');
