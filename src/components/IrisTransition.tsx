@@ -10,7 +10,7 @@ interface Props {
   color?: string;
 }
 
-export function IrisTransition({ visible, onClosed, color = '#1a1a1a' }: Props) {
+export function IrisTransition({ visible, onClosed, color = '#00115a' }: Props) {
   // We animate a colored circle that GROWS to cover the screen (close)
   // or SHRINKS to nothing (open)
   const scale = useRef(new Animated.Value(visible ? 0 : 1)).current;
