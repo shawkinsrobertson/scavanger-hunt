@@ -1,12 +1,5 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedProps,
-  withTiming,
-  runOnJS,
-  Easing,
-} from 'react-native-reanimated';
+import React, { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, Dimensions, Easing } from 'react-native';
 import Svg, { Defs, Mask, Rect, Circle } from 'react-native-svg';
 
 const { width, height } = Dimensions.get('window');
@@ -14,36 +7,39 @@ const MAX_R = Math.ceil(Math.sqrt(width * width + height * height) / 2) + 10;
 const CX = width / 2;
 const CY = height / 2;
 
+// Wire Animated into SVG Circle's r prop
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 interface Props {
-  visible: boolean;       // true = open (screen visible), false = closing
-  onClosed?: () => void;  // fires when iris is fully shut
+  visible: boolean;
+  onClosed?: () => void;
   color?: string;
 }
 
 export function IrisTransition({ visible, onClosed, color = '#1a1a1a' }: Props) {
-  const radius = useSharedValue(MAX_R);
+  const radius = useRef(new Animated.Value(MAX_R)).current;
 
   useEffect(() => {
     if (!visible) {
-      radius.value = withTiming(0, {
+      // Close: shrink to 0 in 8 discrete steps
+      Animated.timing(radius, {
+        toValue: 0,
         duration: 700,
         easing: Easing.steps(8, true),
-      }, (finished) => {
-        if (finished && onClosed) runOnJS(onClosed)();
+        useNativeDriver: false, // r prop can't use native driver
+      }).start(({ finished }) => {
+        if (finished && onClosed) onClosed();
       });
     } else {
-      radius.value = withTiming(MAX_R, {
+      // Open: expand back out in 8 steps
+      Animated.timing(radius, {
+        toValue: MAX_R,
         duration: 700,
         easing: Easing.steps(8, true),
-      });
+        useNativeDriver: false,
+      }).start();
     }
   }, [visible]);
-
-  const animatedProps = useAnimatedProps(() => ({
-    r: radius.value,
-  }));
 
   return (
     <Svg
@@ -58,7 +54,7 @@ export function IrisTransition({ visible, onClosed, color = '#1a1a1a' }: Props) 
           <AnimatedCircle
             cx={CX}
             cy={CY}
-            animatedProps={animatedProps}
+            r={radius}
             fill="white"
           />
         </Mask>
