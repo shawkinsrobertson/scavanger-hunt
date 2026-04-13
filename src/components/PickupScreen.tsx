@@ -27,6 +27,12 @@ export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed, devMod
 
   const progressPercent = ((stopNumber - 1) / totalStops) * 100;
 
+const STOP_ICONS = [
+  require('../assets/tree.png'),  // stop 1
+  require('../assets/coffee-mug.png'),      // stop 2
+  require('../assets/beach.png'),         // stop 3
+];
+
   function handleButtonPress() {
     Animated.parallel([
       Animated.timing(buttonTranslateX, {
@@ -96,7 +102,10 @@ export function PickupScreen({ stop, stopNumber, totalStops, onConfirmed, devMod
             </>
           ) : (
             <>
-              <Animated.Text style={[styles.confirmedEmoji, { transform: [{ scale: emojiScale }] }]}>🎊</Animated.Text>
+              <Animated.Image
+                  source={STOP_ICONS[(stopNumber - 1) % STOP_ICONS.length]}
+                  style={[styles.confirmedIcon, { transform: [{ scale: emojiScale }] }]}
+                />
               <Text style={styles.heading}>{stop.confirmedMessage}</Text>
               <LoadingDots />
             </>
@@ -199,7 +208,11 @@ const styles = StyleSheet.create({
     height:180, 
    },
 
-  confirmedEmoji: { fontSize: 56 },
+  cconfirmedIcon: {
+  width: 96,
+  height: 96,
+  resizeMode: 'contain',
+},
 
   heading: { 
     fontFamily: "PixelifySans-SemiBold",
