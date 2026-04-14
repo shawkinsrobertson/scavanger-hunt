@@ -4,12 +4,11 @@
     "slug": "scavenger-hunt",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon-chest.png",
+    "icon": "./src/assets/app-icon.png",
     "userInterfaceStyle": "light",
+    
     "splash": {
-      "layout": "fullscreen",
-      "background": "#dce1ff",
-      "image": "./src/assets/splash-screen.png",
+      "image": "./src/assets/splash-icon-light.png",
       "resizeMode": "cover",
       "backgroundColor": "#dce1ff"
     },
@@ -23,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#fefbff",
-        "foregroundImage": "./src/assets/treasure-chest.png"
+        "foregroundImage": "./src/assets/app-icon.png"
       },
       "permissions": [
         "ACCESS_FINE_LOCATION",
