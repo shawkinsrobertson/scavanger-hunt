@@ -30,10 +30,12 @@
       background: radial-gradient(#fefbff 65%, #e2e1ec 85%, #dfe1f9 95%);
       color: var(--primary-color);
     }
+
     header {
       text-align: center;
       margin-bottom: 40px;
     }
+
     .eyebrow {
       text-transform: uppercase;
       color: var(--secondary-color);
@@ -61,6 +63,10 @@
     }
 
     .step {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-start;
       background-color: #fff;
       padding: 20px;
       border-radius: 8px;
@@ -72,12 +78,32 @@
       margin-top: 0;
     }
 
+    span {
+      color: var(--secondary-color);
+      font-size: 14px;
+    }
+
+    li {
+      margin-bottom: 6px;
+      margin-left: 56px;
+    }
+
+
     .download-btn img{
       height: 120px;
       width: 240px;
       object-fit: contain;
-      display: inline-block;
+      display: block;
       padding: 10px 20px;
+    }
+
+    span {
+      margin-top: -24px;
+      margin-left: 24px;
+    }
+
+    p {
+      padding: 0 20px;
     }
 
     .download-btn img:active {
@@ -113,7 +139,7 @@
     <div class="step" id="step-1">
       <h2>1. Download the app</h2>
       <p>Tap the button below to download the file. It will land in your Downloads folder.</p>
-      <a href="YOUR_APK_LINK_HERE" class="download-btn"><img src="media/download-btn.png" alt="Download" /></a>
+      <a href="https://github.com/shawkinsrobertson/scavenger-hunt/releases/tag/v1.0.0" target="_blank" class="download-btn"><img src="media/download-btn.png" alt="Download" /></a><span><i>(it's the APK)</i></span>
     </div>
  
     <div class="step" id="step-2">
