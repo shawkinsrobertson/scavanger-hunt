@@ -22,8 +22,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#4658a9",
-        "backgroundImage": "./src/assets/treasure-chest.png"
+        "backgroundColor": "#fefbff",
+        "foregroundImage": "./src/assets/treasure-chest.png"
       },
       "permissions": [
         "ACCESS_FINE_LOCATION",
